@@ -4,7 +4,10 @@
 <head>
   <meta charset="utf-8">
 
-  <title>reveal.js - Slide Backgrounds</title>
+  <title>Docker intro</title>
+  <details>
+    Presentación - introducción a docker en español. Conceptos, comandos, ejercicios
+  </details>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -14,6 +17,15 @@
   <style>
     div.slides > section {
       padding-top: 100px;
+    }
+    pre {
+      position: relative;
+    }
+
+    .--copy {
+      position: absolute;
+      top: 10px;
+      right: 0px;
     }
   </style>
 </head>
@@ -46,6 +58,7 @@
           <h1>Intro</h1>
           <ul>
             <li>VM vs Docker</li>
+            <li>Ventajas de docker</li>
             <li>Conceptos</li>
             <li>Partes de Docker Engine</li>
             <li>Docker Hub</li>
@@ -54,18 +67,84 @@
         </section>
         <section>
           <h3>VM vs Docker</h3>
+          <p>
+            La principal diferencia es que las VMs traen consigo su propio kernel, mientras que los contenedores de Docker ocupan el kernel del host. Esto tiene varias ventajas:
+          </p>
+          <ul>
+            <li>Mucho menor tamaño</li>
+            <li>Tiempo de arranque casi instantaneo</li>
+            <li>Menor uso de recursos</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Ventajas de Docker</h3>
+          <ul>
+            <li>Como las imagenes están construidas en capas, es posible construir sobre ellas y aprovechas las capas previamente descargadas</li>
+            <li>Corren de la misma manera en cualquier sistema operativo</li>
+            <li>Como mantiene una versión local de las librerías no hay problemas de compatibilidad o mantenimiento en ambientes múltiples</li>
+            <li>Las imagenes son fácilmente almacenadas y cacheadas en registries o localmente. Esto permite una gran velocidad de construcción y despliegue de aplicaciones</li>
+            <li>Tiene una capa de red propia, evitando así problemas de seguridad</li>
+            <li>Es posible deplegar en cluster contenedores permientendo escalamiento horizontal (Swarm / Kubernetes)</li>
+          </ul>
         </section>
         <section>
           <h3>Conceptos</h3>
+          <ul>
+            <li>
+              <h4>Imagen</h4>
+            </li>
+          </ul>
+          <p>Las imágenes de Docker son la base de los contenedores. Una imagen es una colección ordenada de cambios en un sistema y los parámetros de ejecución correspondientes, las cuales componen capas apiladas. Las imágenes tienen únicamente permisos de lectura</p>
+          <ul>
+            <li>
+              <h4>Contenedor</h4>
+            </li>
+          </ul>
+          <p>
+            Un contenedor es una instancia ejecutable de una imagen. Un contenedor Docker consta de:
+          </p>
+          <ul>
+            <li>
+              <li>Una imagen base</li>
+              <li>Un entorno de ejecución</li>
+              <li>Un conjunto de instrucciones.</li>
+            </li>
+          </ul>
         </section>
         <section>
           <h3>Partes de Docker Engine</h3>
+          <ul>
+            <li><h4>Docker daemon / Server</h4></li>
+            <li><h4>Docker CLI / Cliente</h4></li>
+          </ul>
         </section>
         <section>
           <h3>Docker Hub</h3>
+          <p>Docker Hub es un recurso centralizado para trabajar con Docker y sus componentes. Brinda los siguientes servicios:
+          </p>
+          <ul>
+            <li>  Un registro para alojar imágenes de Docker</li>
+            <li>  Autenticacion de usuario</li>
+            <li>  Compilaciones de imágenes automatizadas y herramientas de flujo de trabajo, como disparadores de compilación y enlaces web</li>
+            <li>  Integración con GitHub y Bitbucket</li>
+            <li>  Análisis de vulnerabilidades de seguridad</li>
+          </ul>
         </section>
         <section>
-          <h3>Docker File</h3>
+          <h3>Dockerfile</h3>
+          <p>
+            Un Dockerfile es un documento de texto que contiene todos los comandos que normalmente se ejecutaríam manualmente para crear una imagen de Docker. Docker puede crear imágenes automáticamente leyendo las instrucciones de un Dockerfile.
+
+            Cada instrucción define una capa. Las capas se comparten entre imagenes para eficientizar el tamaño
+            Tiene comandos específicos con este formato:
+          </p>
+          <pre><code data-trim data-noescape>
+            # Comment
+            INSTRUCTION arguments
+          </code></pre>
+          <!-- <ul>
+            <li></li>
+          </ul> -->
         </section>
       </section>
       <section id="cli">
@@ -74,36 +153,394 @@
         </section>
         <section>
           <ul>
+            <li><a href="#pull">docker pull ...</a></li>
+            <li><a href="#images">docker images ...</a></li>
             <li><a href="#run">docker run ...</a></li>
             <li><a href="#ps">docker ps ...</a></li>
+            <li><a href="#stop">docker stop ...</a></li>
+            <li><a href="#rm">docker rm ...</a></li>
             <li><a href="#build">docker build ...</a></li>
             <li><a href="#exec">docker exec ...</a></li>
-            <li><a href="#log">docker log ...</a></li>
+            <li><a href="#logs">docker logs ...</a></li>
+            <li><a href="#cp">docker cp ...</a></li>
             <li><a href="#stats">docker stats ...</a></li>
             <li><a href="#inspect">docker inspect ...</a></li>
           </ul>
         </section>
+        <section id="pull">
+          <h3>docker pull</h3>
+          <p>
+            Uso:  docker pull [OPTIONS] NAME[:TAG|@DIGEST]
+            "Jala" una imagen or un repositorio de un registry
+            opciones:
+          </p>
+          <ul>
+            <li>-a --all-tags: Descarga todas las imagenes con tags del repo</li>
+            <li>-q --quiet: Suprime el output </li>
+          </ul>
+        </section>
+        <section>
+          <h4>Ejercicio pull</h4>
+          <p>Ejecuta los siguientes comandos en tu terminal</p>
+          <pre>
+            <code data-trim data-noescape>
+              docker pull grycap/cowsay
+            </code>
+          </pre>
+          <pre>
+            <code data-trim data-noescape>
+              docker pull httpd
+            </code>
+          </pre>
+          <pre>
+            <code data-trim data-noescape>
+              docker pull httpd:alpine
+            </code>
+          </pre>
+        </section>
+        <section id="images">
+          <h3>docker images</h3>
+          <p>
+            Uso:  docker images [OPTIONS] [REPOSITORY[:TAG]]
+            Muestra Lista de images
+            Opciones:
+          </p>
+          <ul>
+            <li>
+              -a, --all             Muestra todas las imagens (por default esconde imagenes intermedias)
+            </li>
+            <li>
+              -f, --filter filter   Filtra imagenes basadas en una condición
+            </li>
+          </ul>
+        </section>
+        <section>
+          <h4>Ejercicio images</h4>
+          <pre>
+            <code data-trim data-noescape>
+              docker images
+            </code>
+          </pre>
+          <pre>
+            <code data-trim data-noescape>
+              docker images -a
+            </code>
+          </pre>
+          <pre>
+            <code data-trim data-noescape>
+              docker images httpd
+            </code>
+          </pre>
+        </section>
+        <section>
+
+        </section>
         <section id="run">
           <h3>docker run</h3>
-          
+          <p>
+            Uso:  docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
+            Crea y corre un nuevo contenedor y opcionalmente corre un comando 
+            Opciones principales:
+          </p>
+          <ul>
+            <li>--name string: Asigna un nombre al conendor</li>
+            <li>-d, --detach: Corre el contenedor tras bambalinas e imprime su ID</li>
+            <li>-p, --publish -- Expone uno o más puertos del contenedor al host</li>
+            <li>-e, --env list: Recibe lista de variables de ambientes</li>
+            <li>--env-file list: Lee uno o varios archivos como variables de ambiente</li>
+            <li>-v, --volume list: Monta uno o varios volumenes</li>
+          </ul>
+        </section>
+        <section>
+          <p>Otras opciones</p>
+          <ul>
+            <li>--entrypoint string: Sobreescribe el ENTRYPOINT de la imagen</li>
+            <li>--expose list: Expone uno o varios puertos a la red del conenedor</li>
+            <li>--health-cmd string: Comando para correr pruebas de "salud"</li>
+            <li>-m, --memory bytes: Limite de Memoria</li>
+            <li>--cpus decimal: Limite de CPUS</li>
+            <li>-l, --label list: Asigna una etiqueta como metadata</li>
+            <li>--label-file list: Lee un archivo para definir etiquetas</li>
+            <li>--network network: Conecta un contenedor a una red</li>
+            <li>--restart string: Politica de reinicio (default "no")</li>
+          </ul>
+        </section>
+        <section>
+          <h4>Ejercicio run</h4>
+          <p>Corre los siguientes comandos en tu terminal</p>
+          <pre>
+            <code data-trim data-noescape>
+              docker run grycap/cowsay
+            </code>
+          </pre>
+          <pre>
+            <code data-trim data-noescape>
+              docker run grycap/cowsay /usr/games/cowsay "Hola mundo"
+            </code>
+          </pre>
+          <pre>
+            <code data-trim data-noescape>
+              docker run grycap/cowsay /usr/games/cowsay "Hola mundo"
+            </code>
+          </pre>
+          <pre><code data-trim data-noescape>
+            docker run -d -p 3000:80 --name mi-apache httpd:alpine
+          </code></pre>
+          <pre><code data-trim data-noescape>
+            curl localhost:3000
+          </code></pre>
         </section>
         <section id="ps">
           <h3>docker ps</h3>
+          <p>
+            Uso:  docker ps [OPTIONS]
+            Lista containedores
+          </p>
+          <ul>
+            <li>
+              -a, --all: Muestra todos los contendores (default solo aquellos corriendo)
+            </li>
+            <li>
+              -f, --filter filter: Filtra basados en una condición
+            </li>
+            <li>
+              --format string: Imprime contenedores con una plantilla
+            </li>
+            <li>
+              -n, --last int: Muestra los últimos n contendores creados 
+            </li>
+            <li>
+              -l, --latest: Muestra el último contenedor creado
+            </li>
+            <li>
+              -q, --quiet: Solo muestra los IDs
+            </li>
+            <li>
+              -s, --size: Muestra la suma total del tamaño de los archivos del contenedor
+            </li>
+          </ul>
+        </section>
+        <section>
+          <h4>Ejercicio ps</h4>
+          <p>Ejecuta los siguientes comandos en tu terminal</p>
+          <pre><code data-trim data-noescape>
+            docker ps
+          </code></pre>
+          <pre><code data-trim data-noescape>
+            docker ps -a
+          </code></pre>
+          <pre><code data-trim data-noescape>
+            docker ps -q
+          </code></pre>
+          <pre><code data-trim data-noescape>
+            docker ps -s
+          </code></pre>
+          <pre><code data-trim data-noescape>
+            docker ps -n 2
+          </code></pre>
+          <pre><code data-trim data-noescape>
+            docker ps -l
+          </code></pre>
+          <pre><code data-trim data-noescape>
+            docker ps --format "table {{.ID}}\t {{.Image}}\t {{.Names}}\t {{.Status}}"
+          </code></pre>
+        </section>
+        <section>
+          <h3>docker stop</h3>
+          <p>
+            Uso:  docker stop [OPTIONS] CONTAINER [CONTAINER...]
+            Detiene uno o más contenedores que estén corriendo
+          </p>
+        </section>
+        <section>
+          <h3>docker start</h3>
+          <p>
+            Uso:  docker start [OPTIONS] CONTAINER [CONTAINER...]
+            Arranca uno o más contenedores que estén detenidos
+            Opciones:
+          </p>
+          <ul>
+
+            <li>-a, --attach: Asigna STDOUT/STDERR y sus señales</li>
+            <li>-i, --interactive: Asigna STDIN</li>
+          </ul>
+
+        </section>
+        <section>
+          <h3>docker rm</h3>
+          <p>
+            Usage:  docker rm [OPTIONS] CONTAINER [CONTAINER...]
+            Elimina uno o más contenedores que estén corriendo
+            Opciones:
+          </p>
+          <ul>
+            <li>-f, --force: Forza la eliminación</li>
+            <li>-v, --volumes: Elimina los volumenes anónimos asociados</li>
+          </ul>          
+        </section>
+        <section>
+          <h4>Ejercicios stop / start / rm</h4>
+          <p>Ejecuta los siguientes comandos en tu terminal</p>
+          <pre><code data-trim data-noescape>
+            docker ps
+          </code></pre>
+          <pre><code data-trim data-noescape>
+            docker stop mi-apache
+          </code></pre>
+          <pre><code data-trim data-noescape>
+            docker ps -a
+          </code></pre>
+          <pre><code data-trim data-noescape>
+            docker start mi-apache
+          </code></pre>
+          <pre><code data-trim data-noescape>
+            docker rm mi-apache
+          </code></pre>
         </section>
         <section id="build">
           <h3>docker build</h3>
+          <p>
+            Uso:  docker build [OPTIONS] PATH | URL | -
+            Construye una imagen a partir de un Dockerfile
+            Opciones:
+          </p>
+          <ul>
+            <li>-f, --file string: Nombre del Dockerfile (Default es 'PATH/Dockerfile')</li>
+            <li>-t, --tag list Nombra la imagen y agrega un tag opcionalmente ('name:tag')</li>
+            <li>--build-arg list: Asigna variables exclusivas para el build</li>
+          </ul>
+        </section>
+        <section>
+          <h4>ejercicios build</h4>
+          <p>Ejecuta los siguientes comandos en tu terminal</p>
+          <pre><code data-trim data-noescape>
+            mkdir ejemplo-node && cd ejemplo-node
+            echo 'console.log(process.env.MENSAJE || "Hola noders")' >> index.js
+            echo "FROM node:alpine" >> Dockerfile
+            echo "WORKDIR /app" >> Dockerfile
+            echo "COPY index.js /app" >> Dockerfile
+            echo 'CMD ["node", "index.js"]' >> Dockerfile
+          </code></pre>
+          <pre><code data-trim data-noescape>
+            docker build -t hola-noders .
+          </code></pre>
+          <pre><code data-trim data-noescape>
+            docker run -it hola-noders
+          </code></pre>
+          <pre><code data-trim data-noescape>
+            docker run -e MENSAJE="AdiosNoders" -it hola-noders
+          </code></pre>
         </section>
         <section id="exec">
           <h3>docker exec</h3>
+          <p>
+            Uso:  docker exec [OPTIONS] CONTAINER COMMAND [ARG...]
+            Corre un comando dentro de un contenedor que esté corriendo           
+            Opciones:
+          </p>
+          <ul>
+
+            <li>-d, --detach: Modo separado: Corre en bambalinas</li>
+            <li>-e, --env list: Asigna variables de ambiente</li>
+            <li>--env-file list: Lee archivo de variables de ambiente</li>
+            <li>-i, --interactive: Mantiene STDIN abierto</li>
+            <li>-t, --tty: Asigna una pseudo-TTY</li>
+            <li>-u, --user string: Usuario o UID (format: name|uid[:group|gid])</li>
+            <li>-w, --workdir string: Asigna directorio de trabajo dentro del contenedor </li>
+          </ul>
         </section>
-        <section id="log">
-          <h3>docker log</h3>
+        <section>
+          <h4>Ejerecicios exec</h4>
+          <p>Ejecuta los siguientes comandos en tu terminal</p>
+          <pre><code data-trim data-noescape>
+            docker run -d -p 3000:80 --name mi-apache httpd:alpine
+            docker exec -it mi-apache cat index.html
+          </code></pre>
+          <pre><code data-trim data-noescape>
+            docker exec -it mi-apache pwd
+          </code></pre>
+          <pre><code data-trim data-noescape>
+            docker exec -it mi-apache mkdir acercade
+          </code></pre>
+          <pre><code data-trim data-noescape>
+            docker run -it -w /usr/local/apache2/htdocs/acercade mi-apache echo "Acerca de" >> index.html
+          </code></pre>
+          <pre><code data-trim data-noescape>
+            curl localhost:3000/acercade
+          </code></pre>
+        </section>
+        <section id="logs">
+          <h3>docker logs</h3>
+          <p>
+            Uso:  docker logs [OPTIONS] CONTAINER
+            Obtiene los logs de un contenedor
+            Opciones:
+          </p>
+          <ul>
+            <li>--details: Muestra más detalles</li>
+            <li>-f, --follow: Se mantiene siguiendo los logs</li>
+            <li>--since string: Muestra los logs desde cierta fecha/hora (e.g. 2013-01-02T13:23:37Z) o relativamente (e.g. 42m para 42 minutos)</li>
+            <li>-n, --tail string: Muestra las últimas n lineas (default "all")</li>
+            <li>-t, --timestamps: Muestra timestamps</li>
+            <li>--until string: Muestra los logs hasta cierta fecha/hora (e.g. 2013-01-02T13:23:37Z) o relativamente (e.g. 42m para 42 minutos)</li>
+          </ul>
+        </section>
+        <section>
+          <h4>Ejercicios logs</h4>
+          <p>Ejecuta los siguientes comandos en tu terminal</p>
+          <pre><code data-trim data-noescape>
+            docker run chentex/random-logger
+          </code></pre>
+          <p>puedes detener el contenedor con Ctrl + C</p>
+          <pre><code data-trim data-noescape>
+            docker run --name mi-logger -d chentex/random-logger
+          </code></pre>
+          <pre><code data-trim data-noescape>
+            docker logs mi-logger
+          </code></pre>
+          <pre><code data-trim data-noescape>
+            docker logs -f mi-logger
+          </code></pre>
+          <pre><code data-trim data-noescape>
+            docker logs -n 3 mi-logger
+          </code></pre>
+          <pre><code data-trim data-noescape>
+            docker logs --since 10s  mi-logger
+          </code></pre>
         </section>
         <section id="stats">
           <h3>docker stats</h3>
+          <p>
+            Usage:  docker stats [OPTIONS] [CONTAINER...]
+            Despliega en stream las estadisticas de uso de recurso en vivo de contenedores 
+            Opciones:
+          </p>
+          <ul>
+            
+            <li>-a, --all: Muestra todos los contenedores (default solo aquellos corriendo)</li>
+            <li>--format string: Template de GO para customizar el resultado</li>
+            <li>--no-stream: Sin stream, solo último resultado</li>
+          </ul>
         </section>
         <section id="inspect">
           <h3>docker inspect</h3>
+          <p>
+            Uso:  docker inspect [OPTIONS] NAME|ID [NAME|ID...]
+            Regresa information sobre algún objeto de Docker
+            Opciones:
+          </p>
+          <ul>
+            
+            <li>-f, --format string: Template de GO para customizar el resultado</li>
+            <li>-s, --size: Despliega la suma total de los tamaños de los archivos</li>
+            <li>--type string: Regresa un JSON para el tipo requerido</li>
+          </ul>
+        </section>
+        <section>
+          <h4>Ejercicios inspect</h4>
+          <pre><code data-trim data-noescape>
+            docker inspect mi-apache | jq '.'
+          </code></pre>
         </section>
       </section>
       <section id="compose">
@@ -138,6 +575,26 @@
       // transitionSpeed: 'slow',
       // backgroundTransition: 'slide'
     });
+
+    function enableCopy(selector = "pre", childSelector = "code", btnText = "Copiar", btnTextSuccess = "Copiado!", activeClass = "--copy") {
+      document.querySelectorAll(`${selector}:not(.${activeClass})`).forEach(node => { // create a "copy" button
+      let copyBtn = document.createElement("button");
+      copyBtn.innerText = btnText;
+      // activeClass acts as flag so we don't add another copy button by  mistake
+        copyBtn.classList.add(activeClass); 
+        node.appendChild(copyBtn);  copyBtn.addEventListener("click", async () => {    // copy to clipboard
+          if (navigator.clipboard) {
+            let text = node.querySelector(childSelector).innerText;
+            console.log('text', text)
+            await navigator.clipboard.writeText(text);
+          }    // change text of button after copying
+          copyBtn.innerText = btnTextSuccess;    // change text back to normal after ### ms
+          setTimeout(() => copyBtn.innerText = btnText, 2000);
+        })   
+      })
+    }
+
+    enableCopy()
   </script>
 
 </body>
