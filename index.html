@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>reveal.js - Slide Backgrounds</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/theme/night.css" id="theme">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/monokai.css" >
+  <style>
+    div.slides > section {
+      padding-top: 100px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="reveal">
+
+    <div class="slides" >
+
+      <section id="indice">
+
+        <section>
+          <h2>Docker</h2>
+          <h3>de Cero al Mero mero</h3>
+        </section>
+        <section>
+          <h3>Índice</h3>
+          <ul>
+            <div><a href="#intro">Clase 1: Intro</a></div>
+            <div><a href="#cli">Clase 2: Docker CLI</a></div>
+            <div><a href="#compose">Clase 3: Docker Compose</a></div>
+            <div><a href="#volumes">Clase 4: Volumes </a></div>
+            <div><a href="#network">Clase 5: Network </a></div>
+          </ul>
+        </section>
+      </section>
+      <section id="intro">
+        <section>
+          <h1>Intro</h1>
+          <ul>
+            <li>VM vs Docker</li>
+            <li>Conceptos</li>
+            <li>Partes de Docker Engine</li>
+            <li>Docker Hub</li>
+            <li>Dockerfile</li>
+          </ul>
+        </section>
+        <section>
+          <h3>VM vs Docker</h3>
+        </section>
+        <section>
+          <h3>Conceptos</h3>
+        </section>
+        <section>
+          <h3>Partes de Docker Engine</h3>
+        </section>
+        <section>
+          <h3>Docker Hub</h3>
+        </section>
+        <section>
+          <h3>Docker File</h3>
+        </section>
+      </section>
+      <section id="cli">
+        <section>
+          <h1>Docker Cli</h1>
+        </section>
+        <section>
+          <ul>
+            <li><a href="#run">docker run ...</a></li>
+            <li><a href="#ps">docker ps ...</a></li>
+            <li><a href="#build">docker build ...</a></li>
+            <li><a href="#exec">docker exec ...</a></li>
+            <li><a href="#log">docker log ...</a></li>
+            <li><a href="#stats">docker stats ...</a></li>
+            <li><a href="#inspect">docker inspect ...</a></li>
+          </ul>
+        </section>
+        <section id="run">
+          <h3>docker run</h3>
+          
+        </section>
+        <section id="ps">
+          <h3>docker ps</h3>
+        </section>
+        <section id="build">
+          <h3>docker build</h3>
+        </section>
+        <section id="exec">
+          <h3>docker exec</h3>
+        </section>
+        <section id="log">
+          <h3>docker log</h3>
+        </section>
+        <section id="stats">
+          <h3>docker stats</h3>
+        </section>
+        <section id="inspect">
+          <h3>docker inspect</h3>
+        </section>
+      </section>
+      <section id="compose">
+        <section>
+          <h1>Docker Compose</h1>
+        </section>
+      </section>
+      <section id="volumes">
+        <section>
+          <h1>Docker Volumes</h1>
+        </section>
+      </section>
+      <section id="network">
+        <section>
+          <h1>Docker Network</h1>
+        </section>
+      </section>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/markdown/markdown.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/highlight.js"></script>
+  <script>
+    // Full list of configuration options:
+    // https://revealjs.revealjs.com/config/
+    Reveal.initialize({
+      center: true,
+
+      transition: 'linear',
+      plugins: [RevealMarkdown, RevealHighlight]
+      // transitionSpeed: 'slow',
+      // backgroundTransition: 'slide'
+    });
+  </script>
+
+</body>
+
+</html>
