@@ -5,9 +5,8 @@
   <meta charset="utf-8">
 
   <title>Docker intro</title>
-  <!-- <details>
-    Presentación - introducción a docker en español. Conceptos, comandos, ejercicios
-  </details> -->
+  
+  <meta name="description" content="Presentación - introducción a docker en español. Conceptos, comandos, ejercicios" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -26,6 +25,16 @@
       position: absolute;
       top: 10px;
       right: 0px;
+    }
+
+    .text-sm {
+      font-size: 1.6rem;
+    }
+
+    ul.cols-2 {
+      display: grid ;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 2rem;
     }
   </style>
 </head>
@@ -78,7 +87,7 @@
         </section>
         <section>
           <h3>Ventajas de Docker</h3>
-          <ul>
+          <ul class="cols-2 text-sm">
             <li>Como las imagenes están construidas en capas, es posible construir sobre ellas y aprovechas las capas previamente descargadas</li>
             <li>Corren de la misma manera en cualquier sistema operativo</li>
             <li>Como mantiene una versión local de las librerías no hay problemas de compatibilidad o mantenimiento en ambientes múltiples</li>
@@ -89,25 +98,21 @@
         </section>
         <section>
           <h3>Conceptos</h3>
-          <ul>
+          <ul class="cols-2 text-sm">
             <li>
               <h4>Imagen</h4>
+              <p>Las imágenes de Docker son la base de los contenedores. Una imagen es una colección ordenada de cambios en un sistema y los parámetros de ejecución correspondientes, las cuales componen capas apiladas. Las imágenes tienen únicamente permisos de lectura</p>
             </li>
-          </ul>
-          <p>Las imágenes de Docker son la base de los contenedores. Una imagen es una colección ordenada de cambios en un sistema y los parámetros de ejecución correspondientes, las cuales componen capas apiladas. Las imágenes tienen únicamente permisos de lectura</p>
-          <ul>
             <li>
               <h4>Contenedor</h4>
-            </li>
-          </ul>
-          <p>
-            Un contenedor es una instancia ejecutable de una imagen. Un contenedor Docker consta de:
-          </p>
-          <ul>
-            <li>
-              <li>Una imagen base</li>
-              <li>Un entorno de ejecución</li>
-              <li>Un conjunto de instrucciones.</li>
+              <p>
+                Un contenedor es una instancia ejecutable de una imagen. Un contenedor Docker consta de:
+              </p>
+              <ul>
+                <li>Una imagen base</li>
+                <li>Un entorno de ejecución</li>
+                <li>Un conjunto de instrucciones.</li>
+              </ul>
             </li>
           </ul>
         </section>
@@ -122,7 +127,7 @@
           <h3>Docker Hub</h3>
           <p>Docker Hub es un recurso centralizado para trabajar con Docker y sus componentes. Brinda los siguientes servicios:
           </p>
-          <ul>
+          <ul class="cols-2 text-sm">
             <li>  Un registro para alojar imágenes de Docker</li>
             <li>  Autenticacion de usuario</li>
             <li>  Compilaciones de imágenes automatizadas y herramientas de flujo de trabajo, como disparadores de compilación y enlaces web</li>
@@ -132,9 +137,10 @@
         </section>
         <section>
           <h3>Dockerfile</h3>
-          <p>
+          <p class="text-sm">
             Un Dockerfile es un documento de texto que contiene todos los comandos que normalmente se ejecutaríam manualmente para crear una imagen de Docker. Docker puede crear imágenes automáticamente leyendo las instrucciones de un Dockerfile.
-
+          </p>
+          <p class="text-sm">
             Cada instrucción define una capa. Las capas se comparten entre imagenes para eficientizar el tamaño
             Tiene comandos específicos con este formato:
           </p>
@@ -142,9 +148,6 @@
             # Comment
             INSTRUCTION arguments
           </code></pre>
-          <!-- <ul>
-            <li></li>
-          </ul> -->
         </section>
       </section>
       <section id="cli">
@@ -152,7 +155,7 @@
           <h1>Docker Cli</h1>
         </section>
         <section>
-          <ul>
+          <ul class="cols-2 text-sm">
             <li><a href="#pull">docker pull ...</a></li>
             <li><a href="#images">docker images ...</a></li>
             <li><a href="#run">docker run ...</a></li>
@@ -181,7 +184,7 @@
         </section>
         <section>
           <h4>Ejercicio pull</h4>
-          <p>Ejecuta los siguientes comandos en tu terminal</p>
+          <p class="text-sm">Ejecuta los siguientes comandos en tu terminal</p>
           <pre>
             <code data-trim data-noescape>
               docker pull grycap/cowsay
@@ -232,9 +235,6 @@
             </code>
           </pre>
         </section>
-        <section>
-
-        </section>
         <section id="run">
           <h3>docker run</h3>
           <p>
@@ -242,7 +242,7 @@
             Crea y corre un nuevo contenedor y opcionalmente corre un comando 
             Opciones principales:
           </p>
-          <ul>
+          <ul class="cols-2 text-sm">
             <li>--name string: Asigna un nombre al conendor</li>
             <li>-d, --detach: Corre el contenedor tras bambalinas e imprime su ID</li>
             <li>-p, --publish -- Expone uno o más puertos del contenedor al host</li>
@@ -253,7 +253,7 @@
         </section>
         <section>
           <p>Otras opciones</p>
-          <ul>
+          <ul class="cols-2 text-sm">
             <li>--entrypoint string: Sobreescribe el ENTRYPOINT de la imagen</li>
             <li>--expose list: Expone uno o varios puertos a la red del conenedor</li>
             <li>--health-cmd string: Comando para correr pruebas de "salud"</li>
@@ -278,11 +278,6 @@
               docker run grycap/cowsay /usr/games/cowsay "Hola mundo"
             </code>
           </pre>
-          <pre>
-            <code data-trim data-noescape>
-              docker run grycap/cowsay /usr/games/cowsay "Hola mundo"
-            </code>
-          </pre>
           <pre><code data-trim data-noescape>
             docker run -d -p 3000:80 --name mi-apache httpd:alpine
           </code></pre>
@@ -296,7 +291,7 @@
             Uso:  docker ps [OPTIONS]
             Lista containedores
           </p>
-          <ul>
+          <ul class="cols-2 text-sm">
             <li>
               -a, --all: Muestra todos los contendores (default solo aquellos corriendo)
             </li>
@@ -322,7 +317,7 @@
         </section>
         <section>
           <h4>Ejercicio ps</h4>
-          <p>Ejecuta los siguientes comandos en tu terminal</p>
+          <p class="text-sm">Ejecuta los siguientes comandos en tu terminal</p>
           <pre><code data-trim data-noescape>
             docker ps
           </code></pre>
@@ -380,7 +375,7 @@
         </section>
         <section>
           <h4>Ejercicios stop / start / rm</h4>
-          <p>Ejecuta los siguientes comandos en tu terminal</p>
+          <p class="text-sm">Ejecuta los siguientes comandos en tu terminal</p>
           <pre><code data-trim data-noescape>
             docker ps
           </code></pre>
@@ -412,7 +407,7 @@
         </section>
         <section>
           <h4>ejercicios build</h4>
-          <p>Ejecuta los siguientes comandos en tu terminal</p>
+          <p class="text-sm">Ejecuta los siguientes comandos en tu terminal</p>
           <pre><code data-trim data-noescape>
             mkdir ejemplo-node && cd ejemplo-node
             echo 'console.log(process.env.MENSAJE || "Hola noders")' >> index.js
@@ -438,7 +433,7 @@
             Corre un comando dentro de un contenedor que esté corriendo           
             Opciones:
           </p>
-          <ul>
+          <ul class="cols-2 text-sm">
 
             <li>-d, --detach: Modo separado: Corre en bambalinas</li>
             <li>-e, --env list: Asigna variables de ambiente</li>
@@ -451,7 +446,7 @@
         </section>
         <section>
           <h4>Ejerecicios exec</h4>
-          <p>Ejecuta los siguientes comandos en tu terminal</p>
+          <p class="text-sm">Ejecuta los siguientes comandos en tu terminal</p>
           <pre><code data-trim data-noescape>
             docker run -d -p 3000:80 --name mi-apache httpd:alpine
             docker exec -it mi-apache cat index.html
@@ -476,7 +471,7 @@
             Obtiene los logs de un contenedor
             Opciones:
           </p>
-          <ul>
+          <ul class="cols-2 text-sm">
             <li>--details: Muestra más detalles</li>
             <li>-f, --follow: Se mantiene siguiendo los logs</li>
             <li>--since string: Muestra los logs desde cierta fecha/hora (e.g. 2013-01-02T13:23:37Z) o relativamente (e.g. 42m para 42 minutos)</li>
@@ -487,7 +482,7 @@
         </section>
         <section>
           <h4>Ejercicios logs</h4>
-          <p>Ejecuta los siguientes comandos en tu terminal</p>
+          <p class="text-sm">Ejecuta los siguientes comandos en tu terminal</p>
           <pre><code data-trim data-noescape>
             docker run chentex/random-logger
           </code></pre>
