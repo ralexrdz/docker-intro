@@ -449,7 +449,7 @@
           <p class="text-sm">Ejecuta los siguientes comandos en tu terminal</p>
           <pre><code data-trim data-noescape>
             docker run -d -p 3000:80 --name mi-apache httpd:alpine
-            docker exec -it mi-apache cat index.html
+            docker exec -it mi-apache cat htdocs/index.html
           </code></pre>
           <pre><code data-trim data-noescape>
             docker exec -it mi-apache pwd
@@ -458,7 +458,8 @@
             docker exec -it mi-apache mkdir acercade
           </code></pre>
           <pre><code data-trim data-noescape>
-            docker run -it -w /usr/local/apache2/htdocs/acercade mi-apache echo "Acerca de" >> index.html
+            echo "Acerca de" >> index.html
+            docker cp index.html mi-apache:/usr/local/apache2/htdocs/acercade
           </code></pre>
           <pre><code data-trim data-noescape>
             curl localhost:3000/acercade
@@ -540,7 +541,105 @@
       </section>
       <section id="compose">
         <section>
-          <h1>Docker Compose</h1>
+          <h3>Docker Compose</h3>
+          <img style="max-height: 300px;" src="https://codefresh.io/wp-content/uploads/2016/12/compose_swarm.png" alt="" srcset="">
+        </section>
+        <section>
+          <h3>docker-compose  </h3>
+          <p>
+            Se usa para crear, actualizar o levantar contenedores utilizando archivos.
+          </p>
+          <img style="max-height: 300px;" src="https://miro.medium.com/max/720/1*WrdwnPteyX4yoqZwP1huXg.png" alt="">
+        </section>
+        <section>
+          <h3>¿Para qué surge?</h3>
+          <p>Para simplificar la tarea de manejar y vincular ambientes complejos de Docker, como crear varios contenedores Docker y conectarlos mediante varias redes. </p>
+          <p>Además, administrar los contenedores y su condifuración desde la terminal es una tarea tediosa. Tenemos que usar la diagonal inversa para varias líneas, saber cual comando fue el bueno, cual para qué ambiente, etc.</p>
+        </section>
+        <section>
+          <h3>¿Para qué se usa? </h3>
+          <p>Docker Compose es una herramienta para definir y ejecutar aplicaciones basadas en docker que usan varios contenedores.</p>
+          <p>Con Compose, se utilizan archivos YAML para configurar los servicios de una aplicación y varios ambientes. </p>
+          <p>Luego, se pueden crear, iniciar, detener o recrear todos los contenedores con un solo comando.</p>
+        </section>
+        <section data-markdown>
+          <textarea data-template style="font-size: 1.3rem;">
+            ### ¿Cuando usar docker y cuándo compose? 
+
+            
+            | Docker |Compose |
+            | --- | --- |
+            | Monitorear servicios | Actualizar servicios |
+            | Pruebas de imagenes | Configuracion de servicios |
+            | Construir imagenes | Agrupar ambientes |
+          </textarea>
+        </section>
+        <section>
+          <h3>YAML</h3>
+          <pre><code data-noescape data-trim  data-line-numbers="2|3|4|5|6-8|9-10|11|12-13|14|15-16|17|19-20|22-23|25-27">
+            version: '3'
+            services:
+
+              servicio-1:
+                container-name: servicio-1
+                image: httpd
+                build: 
+                  context: ./
+                  dockerfile: ./Dockerfile-otro 
+                environment: 
+                  - VAR1: valor1
+                env_file: .env-otra
+                volumes: 
+                  - ./dir_local:/ruta/contenedor
+                  - my-vol:/otra/ruta
+                ports: #host:contenedor
+                  - "3001:80"
+                command: ls
+
+              service-2:
+                ...
+              
+            volumes: 
+              - my-vol
+
+            networks:
+              default: 
+                name: my-net
+          </code></pre>
+        </section>
+        <section>
+          <p>Por default el comando docker-compose buscará la configuración en un archivo llamado docker-compose.yaml dentro del mismo directorio</p>
+          <p>Para cambiar este archivo, utiliza la opción -f</p>
+          <pre><code data-noescape data-trim>
+            docker-compose -f otro-docker-compose.yaml
+          </code></pre>
+        </section>
+        <section>
+          <h4>Vincular contenedores</h4>
+          <p>Una de las principales funciones de Compose es que los contenedores puedan accederse entre sí</p>
+          <p>Compose crea una red propia para cada docker-compose.yaml</p>
+          <p>En caso de querer que se vincule con otra red de Docker, se utiliza el parametro networks</p>
+        </section>
+        <section>
+          <h3>docker-compose config</h3>
+          <p>Puedes validar y visualizar tu configuración YAML con este comando</p>
+          <p>Las variables de ambiente y rutas relativas son explicitadas </p>
+        </section>
+        <section>
+          <h3>Otras herramientas útiles</h3>
+          <ul>
+            <li>
+              Extensión de VS Code: Docker
+              <ul><li><a href="https://code.visualstudio.com/docs/containers/overview">https://code.visualstudio.com/docs/containers/overview</a></li></ul>
+            </li>
+            <li>
+              Transformador de comando docker a archivo docker-compose.yml
+              <ul><li><a href="https://www.composerize.com/">https://www.composerize.com/</a></li></ul>
+            </li>
+          </ul>
+        </section>
+        <section>
+          <p>Ejercicio</p>
         </section>
       </section>
       <section id="volumes">
