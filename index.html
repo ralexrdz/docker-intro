@@ -459,6 +459,7 @@
           </code></pre>
           <pre><code data-trim data-noescape>
             echo "Acerca de" >> index.html
+            docker exec mi-apache mkdir /htdocs/acercade
             docker cp index.html mi-apache:/usr/local/apache2/htdocs/acercade
           </code></pre>
           <pre><code data-trim data-noescape>
