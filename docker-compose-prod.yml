@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  
+  app-node-prod: 
+    image: mi-node:prod
+    container_name: app-node-prod
+    working_dir: /app
+    volumes:
+      - "./index.js:/app/index.js"
+    depends_on:
+      - db-prod
+    ports:
+      - "3011:3000"
+    networks:
+      - prod
+
+  db-prod:
+    image: mongo:4
+    container_name: mi-mongo-prod
+    volumes:
+      - dbvol-prod:/data/db
+    networks:
+      - prod
+
+volumes:
+  dbvol-prod:
+
+networks:
+  prod:

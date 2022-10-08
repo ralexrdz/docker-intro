@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  
+  app-node-dev: 
+    image: mi-node:dev
+    container_name: app-node-dev
+    working_dir: /app
+    volumes:
+      - "./index.js:/app/index.js"
+    depends_on:
+      - db-dev
+    ports:
+      - "3010:3000"
+    networks:
+      - dev
+
+  db-dev:
+    image: mongo:4
+    container_name: mi-mongo-dev
+    volumes:
+      # - dbvol-dev:/data/db
+      - ./dbs/dev:/data/db
+    networks:
+      - dev
+
+  # test:
+  #   image: ubuntu
+
+volumes:
+  dbvol-dev:
+
+networks:
+  dev:
+
