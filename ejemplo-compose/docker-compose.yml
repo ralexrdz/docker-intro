@@ -1,0 +1,47 @@
+version: "3"
+
+services: 
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: 'test_pass'
+    volumes:
+      - db_vol3:/var/lib/mysql
+
+  inicializador:
+    build: 
+      context: ./
+      dockerfile: ./Dockerfile.inicializador
+    depends_on: 
+      - db
+    volumes:
+      - ./inicializaDB.sql:/app/inicializaDB.sql
+      - ./inicializador.js:/app/index.js
+  
+  proceso1:
+    build: 
+      context: ./
+      dockerfile: ./Dockerfile.inicializador
+    depends_on: 
+      - db
+    volumes:
+      - ./proceso1.js:/app/index.js
+
+  proceso2:
+    build: 
+      context: ./
+      dockerfile: ./Dockerfile.inicializador
+    depends_on: 
+      - db
+    volumes:
+      - ./proceso2.js:/app/index.js
+      # - ./logs.txt:/app/logs.txt
+      - ./logs2.txt:/app/logs2.txt
+  
+    
+
+  # proceso1: 
+  #   image: 
+
+volumes:
+  db_vol3:

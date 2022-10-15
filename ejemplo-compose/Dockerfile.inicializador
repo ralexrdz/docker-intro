@@ -1,0 +1,4 @@
+FROM node:18-alpine
+WORKDIR /app
+RUN npm i mysql2
+CMD node index.js

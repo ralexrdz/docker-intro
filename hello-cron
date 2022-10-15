@@ -1,2 +1,3 @@
-* * * * * echo "Hello world" >> /var/log/cron.log 2>&1
+* * * * * /usr/bin/docker-compose -f /home/ralex/Documents/code/sps/curso-docker-k8s/docker-intro/ejemplo-compose/docker-compose.yml up proceso1
+* * * * * /usr/bin/docker-compose -f /home/ralex/Documents/code/sps/curso-docker-k8s/docker-intro/ejemplo-compose/docker-compose.yml up proceso2
 
