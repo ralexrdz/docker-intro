@@ -57,8 +57,7 @@
             <div><a href="#intro">Clase 1: Intro</a></div>
             <div><a href="#cli">Clase 2: Docker CLI</a></div>
             <div><a href="#compose">Clase 3: Docker Compose</a></div>
-            <div><a href="#volumes">Clase 4: Volumes </a></div>
-            <div><a href="#network">Clase 5: Network </a></div>
+            <div><a href="#volumes">Clase 4: Volumenes y Network </a></div>
           </ul>
         </section>
       </section>
@@ -643,17 +642,158 @@
           <p>Ejercicio</p>
         </section>
       </section>
-      <section id="volumes">
+      <section id="volumes-network">
         <section>
-          <h1>Docker Volumes</h1>
+          <h1>Docker Volumenes y Network</h1>
+          <img style="max-width: 400px;" src="http://img.scoop.it/bmExZyvGWidultcwx9hCb7nTzqrqzN7Y9aBZTaXoQ8Q=" alt="">
         </section>
-      </section>
-      <section id="network">
         <section>
-          <h1>Docker Network</h1>
+          <p>La red interna de docker se encarga de crear los puentes de Linux necesarios, las interfaces internas, las reglas de iptables y las rutas de host para hacer posible una conectividad segura y estable.</p>
         </section>
-      </section>
+        <section>
+          <h2>Networking</h2>
+          <ul>
+            <li><a href="/#/create-network">Crear una red</a></li>
+            <li><a href="/#/list-networks">Listar redes</a></li>
+            <li><a href="/#/create-container-in-network">Crear un contenedor conectado a una red</a></li>
+            <li><a href="/#/connect-container-to-network">Conecatar un contenedor conectado a una red</a></li>
+            <li><a href="/#/compose-networks">Redes al usar docker-compose</a></li>
+          </ul>
+        </section>
+        <section id="create-network">
+          <h3>Crear una red</h3>
+          <p style="font-size: 0.5rem;"> Correr este comando en la terminal</p>
+          <pre>
+            <code data-trim data-noescape>
+              Uso: docker network create [OPTIONS] NETWORK
+              Opciones
+            </code>
+          </pre>
+          <ul>
+            <li>--attachable : Permite adjuntar otro contenedor a la red manalmente</li>
+            <li>--config-from string : Copia la configuración de otra red</li>
+            <li>-d, --driver string : Driver para manejar la red (por defecto "bridge, "overlay" para swarm)</li>
+            <li>--gateway strings : IPv4 or IPv6 Gateway |</li>
+            <li>--ip-range strings : Designa un IP a partir de un rango</li>
+            <li>--label list : Asigna metadata</li>
+          </ul>
+        </section>
+        <section id="list-networks">
+          <h3>Listar redes</h3>
+          <p style="font-size: 0.5rem;"> Correr este comando en la terminal</p>
+          <pre>
+            <code data-trim data-noescape>
+              docker network ls
+            </code>
+          </pre>
+        </section>
+        <section id="create-container-in-network">
+          <h3>Crear un contenedor conectado a una red</h3>
+          <p style="font-size: 0.5rem;"> Correr este comando en la terminal</p>
+          <pre>
+            <code data-trim data-noescape>
+              docker run [OPTIONS] --network NETWORK IMAGE 
+            </code>
+          </pre>
+        </section>
+        <section id="connect-container-to-network">
+          <h3>Conecatar un contenedor existente a una red</h3>
+          <p style="font-size: 0.5rem;"> Correr este comando en la terminal</p>
+          <pre>
+            <code data-trim data-noescape>
+              docker network connect [OPTIONS] NETWORK CONTAINER
+            </code>
+          </pre>
+          <ul>
+            <li>--alias strings : Agrega un alias para el contenedor (dentro de la red)</li>
+            <li>--ip string : dirección IPv4 (e.g., 172.30.100.104) </li>
+            <li>--ip6 string : dirección IPv6 (e.g., 2001:db8::33) </li>
+          </ul>
+        </section>
+        <section id="compose-networks">
+          <h3>Redes al usar docker-compose</h3>
+          <p>La aplicación recibe nomre en la red  basado en el "nombre del proyecto", que se basa en el nombre del directorio en el que se encuentra el archivo YAML. Se puede sobreescribir el nombre del proyecto con el campo --project-name o la variable de entorno COMPOSE_PROJECT_NAME.</p>
+        </section>
+        <section>
+          <p>Usemos la siguiente configuración de ejemplo</p>
+          <p>Estoy dentro de un directorio llamado myapp y tengo un YAML así:</p>
+          <pre><code data-trim data-noescape contenteditable>
+            version: "3.9"
+            services:
+              web:
+                build: .
+                ports:
+                  - "8000:8000"
+              db:
+                image: postgres
+                ports:
+                  - "8001:5432"
 
+          </code></pre>
+        </section>
+        <section>
+          <p>
+            Cuando corremos docker compose up, pasa lo siguiente:
+          </p>
+          <ul>
+            <li> La red myapp_default es creada.</li>
+            <li> Se crea un contenedor con la configuración de we. Se una a la red myapp_default bajo el nombre web.</li>
+            <li> Se crea un contenedor con la configuración de db. Se una a la red myapp_default bajo el nombre db.</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Volúmenes</h3>
+          <p>
+            Se usan volumenes para persistir y compartir archivos entre, hacia y desde los contenedores
+          </p>
+          <p>Además, un volumen no aumenta el tamaño de los contenedores que lo utilizan, y el contenido del volumen existe fuera del ciclo de vida de un contenedor. </p>
+        </section>
+        <section>
+          <h4>Ventajas</h4>
+          <ul style="font-size: 0.8rem;">
+            <li> Los volúmenes son más fáciles de respaldar o migrar que los montajes enlazados.</li>
+            <li> Puede administrar volúmenes mediante los comandos de la CLI de Docker o la API de Docker.</li>
+            <li> Los volúmenes funcionan en contenedores de Linux y Windows.</li>
+            <li> Los volúmenes se pueden compartir de forma más segura entre varios contenedores.</li>
+            <li> Los controladores de volumen le permiten almacenar volúmenes en hosts remotos o proveedores de la nube, cifrar el contenido de los volúmenes o agregar otras funciones.</li>
+            <li> Los nuevos volúmenes pueden tener su contenido rellenado previamente por un contenedor.</li>
+            <li> Los volúmenes en Docker Desktop tienen un rendimiento mucho mayor que los montajes de enlace de los hosts de Mac y Windows.</li>
+          </ul>
+        </section>
+        <section>
+          <ul>
+            <li><a href="/#/crear-volumen">Crear un volumen</a></li>
+            <li><a href="/#/crear-contenedor-con-volumen">Crear un contenedor vinculado a un volumen</a></li>
+            <li><a href="/#/compose-con-volumenes">Crear una serie de conetendres con volúmenes usando Compose</a></li>
+          </ul>
+        </section>
+        <section id="crear-volumen">
+          <p>Uso: docker volume create VOLUME</p>
+          <pre><code data-noescape data-trim>
+            -d, --driver string   Specify volume driver name (default "local")
+            --label list      Set metadata for a volume
+            -o, --opt map         Set driver specific options (default map[])
+          </code></pre>
+        </section>
+        <section id="crear-contenedor-con-volumen">
+          <p>Use: docker run [-v | --volume] source=myvol2,target=/app IMAGE  </p>
+        </section>
+        <section id="compose-con-volumenes"></section>
+          <pre><code data-trim data-noescape>
+            version: "3.9"
+            services:
+              frontend:
+                image: node:lts
+                volumes:
+                  - myapp:/home/node/app
+            volumes:
+              myapp:
+
+          </code></pre>
+        <section>
+
+        </section>
+      </section>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.js"></script>

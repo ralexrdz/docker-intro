@@ -1,0 +1,6 @@
+FROM node:18-alpine
+WORKDIR /app
+RUN npm i mysql
+COPY ./query.js .
+CMD [ "node", "query.js" ]
+# CMD "node index.js"
