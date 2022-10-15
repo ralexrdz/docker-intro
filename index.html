@@ -778,20 +778,19 @@
         <section id="crear-contenedor-con-volumen">
           <p>Use: docker run [-v | --volume] source=myvol2,target=/app IMAGE  </p>
         </section>
-        <section id="compose-con-volumenes"></section>
+        <section id="compose-con-volumenes">
+
           <pre><code data-trim data-noescape>
             version: "3.9"
             services:
-              frontend:
-                image: node:lts
-                volumes:
-                  - myapp:/home/node/app
+            frontend:
+            image: node:lts
             volumes:
-              myapp:
-
+            - myapp:/home/node/app
+            volumes:
+            myapp:
+            
           </code></pre>
-        <section>
-
         </section>
       </section>
   </div>
